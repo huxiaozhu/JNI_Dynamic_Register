@@ -6,5 +6,6 @@ public class TestNdk {
     }
 
     public static native String getString();
+    public static native void diff(String path, String pattern_Path, int file_num);
 }
 
