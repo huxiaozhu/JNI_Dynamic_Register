@@ -15,8 +15,6 @@ extern "C" {
 JNIEXPORT jstring JNICALL Java_com_example_jni_1dynamic_1register_TestNdk_getString
   (JNIEnv *, jclass);
 
-JNIEXPORT jstring JNICALL Java_com_example_jni_1dynamic_1register_TestNdk_diff
-  (JNIEnv *, jclass, jstring, jstring, jint);
 #ifdef __cplusplus
 }
 #endif

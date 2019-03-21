@@ -9,24 +9,24 @@
 
 #include <assert.h>
 
+/**
+ * 静态注册
+ */
 JNIEXPORT jstring JNICALL Java_com_example_jni_1dynamic_1register_TestNdk_getString
         (JNIEnv *env, jclass cls) {
     log_e("JNI begin");
     return (*env)->NewStringUTF(env, "Hello ,Wellcome to Jni World");
 }
 
-//动态注册
+/**
+ * *********************************
+ * 动态注册流程
+ */
 JNIEXPORT void JNICALL native_diff
         (JNIEnv *env, jclass clazz, jstring path, jstring pattern_Path, jint file_num) {
     //3.
     log_e("JNI begin 动态注册的方法 ");
 }
-
-static const JNINativeMethod gMethods[] = {
-        {
-                "diff", "(Ljava/lang/String;Ljava/lang/String;I)V", (void *) native_diff
-        }
-};
 
 static int registerNatives(JNIEnv *engv) {
     //2
@@ -38,6 +38,10 @@ static int registerNatives(JNIEnv *engv) {
         log_e("clazz is null");
         return JNI_FALSE;
     }
+
+    JNINativeMethod gMethods[] = {
+            {"diff", "(Ljava/lang/String;Ljava/lang/String;I)V", (void *) native_diff}
+    };
 
     if ((*engv)->RegisterNatives(engv, clazz, gMethods, NELEM(gMethods)) < 0) {
         log_e("RegisterNatives error");
@@ -52,7 +56,7 @@ JNIEXPORT jint JNI_OnLoad(JavaVM *vm, void *reserved) {
     log_e("jni_OnLoad begin");
 
     JNIEnv *env = NULL;
-    jint result = -1;
+//    jint result = -1;
 
     if ((*vm)->GetEnv(vm, (void **) &env, JNI_VERSION_1_4) != JNI_OK) {
         log_e("ERROR: GetEnv failed\n");
